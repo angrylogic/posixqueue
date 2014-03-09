@@ -147,36 +147,3 @@ class MessageQueue(object):
     def __del__(self):
         if self.creator and not self.persist:
             self._library.mq_unlink(self.name)
-
-if __name__ == "__main__":
-    queue = MessageQueue("test3", create=True)
-    writer = MessageQueue.get_writer("test3")
-    reader = MessageQueue.get_reader("test3")
-
-    import json
-    writer.send(json.dumps({"header": "value"}))
-    assert json.loads(reader.recv()) == {"header": "value"}
-
-    assert writer.empty()
-    writer.send("A" * writer.max_size)
-    assert not writer.empty()
-    assert len(writer) == 1
-    assert len(reader) == 1
-    read_bytes = reader.recv()
-    assert len(read_bytes) == writer.max_size
-
-    writer.send("A" * writer.max_size)
-    writer.send("A" * writer.max_size)
-    assert len(writer) == 2
-    assert len(reader) == 2
-    assert len(queue) == 2
-    reader.recv()
-    reader.recv()
-
-    try:
-        reader.recv(timeout=5)
-        assert False
-    except Timeout:
-        pass
-
-    print "Done with tests"
