@@ -1,4 +1,4 @@
 posixqueue
 ==========
 
-Python wrapper for POSIX message queues
+Python wrapper for the POSIX message queue interface
