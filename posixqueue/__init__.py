@@ -66,7 +66,10 @@ class MessageQueue(object):
         if max_messages is None:
             max_messages = self.system_max_messages()
 
-        self.name = "/" + name
+        self.name = name
+        if not self.name.startswith("/"):
+            self.name = "/" + self.name
+
         self.creator = create
         self.mode = mode
         self.persist = persist
