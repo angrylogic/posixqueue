@@ -156,5 +156,8 @@ class MessageQueue(object):
                 raise StopIteration
 
     def __del__(self):
+        ret = self._library.mq_close(self._reference)
+        if ret == -1:
+            self.raise_error()
         if self.creator and not self.persist:
             self._library.mq_unlink(self.name)
