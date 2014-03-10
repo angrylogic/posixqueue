@@ -147,6 +147,14 @@ class MessageQueue(object):
         """Is the message queue currently full."""
         return (len(self) == self.max_messages)
 
+    def __iter__(self):
+        """Implement an iterator over the available messages."""
+        while True:
+            try:
+                yield self.recv(timeout=0)
+            except Timeout:
+                raise StopIteration
+
     def __del__(self):
         if self.creator and not self.persist:
             self._library.mq_unlink(self.name)

@@ -19,6 +19,14 @@ class TestMessageQueue(unittest.TestCase):
         self.queue.send("a" * self.queue.max_size)
         self.assertRaises(MessageQueueError, lambda: self.queue.send("a" * (self.queue.max_size+1)))
 
+    def test_iter(self):
+        """Test the __iter__ interface for scanning all messages in the queue."""
+        test_messages = [os.urandom(512) for _ in xrange(self.queue.max_messages)]
+        for msg in test_messages:
+            self.queue.send(msg)
+        for n, msg in enumerate(self.queue):
+            assert msg == test_messages[n]
+
     def test_full_empty_len(self):
         """Test the empty, full and len operations against the queue."""
         self.assertTrue(self.queue.empty())
