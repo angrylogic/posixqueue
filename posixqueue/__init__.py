@@ -6,10 +6,10 @@ from time import time
 from errno import errorcode
 
 class MessageQueueError(Exception):
-    pass
+    """Base error class for problems from the underlying library."""
 
 class Timeout(MessageQueueError):
-    pass
+    """Exception for tiemouts on send, recv operations."""
 
 class MessageQueueAttributes(ctypes.Structure):
     _fields_ = [("mq_flags", ctypes.c_long),
