@@ -88,12 +88,12 @@ class MessageQueue(object):
 
         if self.creator:
             attributes = MessageQueueAttributes(0, self.max_messages, self.max_size, 0)
-            self._reference = self._library.mq_open(ctypes.c_char_p(self.name), 
-                                                    ctypes.c_int(flags), 
-                                                    ctypes.c_int(permissions), 
+            self._reference = self._library.mq_open(ctypes.c_char_p(self.name),
+                                                    ctypes.c_int(flags),
+                                                    ctypes.c_int(permissions),
                                                     ctypes.byref(attributes))
         else:
-            self._reference = self._library.mq_open(ctypes.c_char_p(self.name), 
+            self._reference = self._library.mq_open(ctypes.c_char_p(self.name),
                                                     ctypes.c_uint(flags))
         if self._reference == -1:
             self.raise_error()
