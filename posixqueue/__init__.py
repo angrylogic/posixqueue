@@ -15,7 +15,8 @@ class MessageQueueAttributes(ctypes.Structure):
     _fields_ = [("mq_flags", ctypes.c_long),
                 ("mq_maxmsg", ctypes.c_long),
                 ("mq_msgsize", ctypes.c_long),
-                ("mq_curmsgs", ctypes.c_long)]
+                ("mq_curmsgs", ctypes.c_long),
+                ("__reserved", (ctypes.c_long*4))]
 
 class MessageQueueTimeSpec(ctypes.Structure):
     _fields_ = [("tv_sec", ctypes.c_long),
