@@ -12,6 +12,7 @@ class Timeout(MessageQueueError):
     """Exception for tiemouts on send, recv operations."""
 
 class MessageQueueAttributes(ctypes.Structure):
+    """ctypes wrapper around mq_attr"""
     _fields_ = [("mq_flags", ctypes.c_long),
                 ("mq_maxmsg", ctypes.c_long),
                 ("mq_msgsize", ctypes.c_long),
@@ -19,6 +20,7 @@ class MessageQueueAttributes(ctypes.Structure):
                 ("__reserved", (ctypes.c_long*4))]
 
 class MessageQueueTimeSpec(ctypes.Structure):
+    """ctypes wrapper around timespec"""
     _fields_ = [("tv_sec", ctypes.c_long),
                 ("tv_nsec", ctypes.c_long)]
 
